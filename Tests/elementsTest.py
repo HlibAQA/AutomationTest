@@ -9,12 +9,12 @@ from conftest import driver
 
 
 class TestTextBoxPage:
-    def test(self, driver):
+    def TestTextBox(self, driver):
         page = TextBoxPage(driver, "https://demoqa.com/text-box")
         page.openUrl()
         inPutData = page.fillAllFields()
         outPutData = page.getResult()
-        assert inPutData == outPutData, "loh"
+        assert inPutData == outPutData, "The result is not matched with the data that user types"
 
 class TestCheckBoxPage:
      def testCheckBox(self, driver):
@@ -24,7 +24,7 @@ class TestCheckBoxPage:
          page.CheckList()
          checkBoxResult = page.CheckCheckedCheckbox()
          textResult = page.GetOutOutResult()
-         assert checkBoxResult == textResult
+         assert checkBoxResult == textResult, "Checkboxes result is not matched"
 
 class TestRadioButtonPage:
     def testRadioButtons(self, driver):
@@ -36,7 +36,7 @@ class TestRadioButtonPage:
         inputImpressive = page.GetRadioResult()
         page.ClickRadioButton('no')
         inputNo = page.GetRadioResult()
-        assert inputYes == 'Yes'
+        assert inputYes == 'Yes', "Incorrect radio button"
         assert inputImpressive == 'Impressive'
 
 class TestWebTablePage:

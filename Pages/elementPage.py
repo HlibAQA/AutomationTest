@@ -2,11 +2,9 @@ import base64
 import os
 import random
 import time
-
 import requests
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
-
 from Locators.locatorForElementPage import Locators, LocatorsForWebTables, LocatorsForButtons, LocatorsForLists, \
     LocatorsForDownload, LocatorsForDynamicProperties, LocatorsForRadioButtons, LocatorsForCheckBox
 from Pages.basePage import BasePage
