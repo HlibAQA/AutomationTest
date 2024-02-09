@@ -2,6 +2,7 @@ import base64
 import os
 import random
 import time
+from functools import wraps
 import requests
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
@@ -108,12 +109,13 @@ class WebTablesPage(BasePage):
             self.elementIsVisible(self.locators.add_tables).click()
         except:
             pass
+        valid_num = self.elementIsVisible(self.locators.department_input).get_attribute("maxlength")
         self.elementIsVisible(self.locators.first_name_input).send_keys(firstName)
         self.elementIsVisible(self.locators.last_name_input).send_keys(lastName)
         self.elementIsVisible(self.locators.email_input).send_keys(email)
         self.elementIsVisible(self.locators.age_input).send_keys(age)
         self.elementIsVisible(self.locators.salary_input).send_keys(salary)
-        self.elementIsVisible(self.locators.department_input).send_keys(department)
+        self.elementIsVisible(self.locators.department_input).send_keys(department[:int(valid_num)])
         self.elementIsVisible(self.locators.submit_button).click()
         return [firstName, lastName, str(age), email, str(salary), department]
 
@@ -159,7 +161,31 @@ class WebTablesPage(BasePage):
             else:
                 count += 1
                 self.elementIsVisible(self.locators.GetDeleteUserButtonById(count)).click()
+        if self.CheckNumberOfUsersInTheTable()[0] == ['       ']:
+            pass
+        else:
+            self.DeleteUser()
         return self.elementIsVisible(self.locators.no_rows_text).text
+
+    def CheckValidationForFields(self):
+        self.elementIsVisible(self.locators.add_tables).click()
+        self.elementIsVisible(self.locators.submit_button).click()
+        time.sleep(1)
+        isFirstNameValid = self.IsFieldValid(self.elementIsVisible(self.locators.first_name_input))
+        isLastNameValid = self.IsFieldValid(self.elementIsVisible(self.locators.last_name_input))
+        isEmailValid = self.IsFieldValid(self.elementIsVisible(self.locators.email_input))
+        isAgeValid = self.IsFieldValid(self.elementIsVisible(self.locators.age_input))
+        isSalaryValid = self.IsFieldValid(self.elementIsVisible(self.locators.salary_input))
+        isDepartmentValid = self.IsFieldValid(self.elementIsVisible(self.locators.department_input))
+        return [isFirstNameValid, isLastNameValid, isEmailValid, isAgeValid, isSalaryValid, isDepartmentValid]
+
+    def IsFieldValid(self, locartor):
+        fieldColor = locartor.value_of_css_property("border-color")
+        #rgb(220, 53, 69) is correct color
+        if str(fieldColor) == "rgb(220, 53, 69)":
+            return True
+        else:
+            return False
 
 class ButtonPage(BasePage):
     locators = LocatorsForButtons()

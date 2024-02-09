@@ -69,6 +69,12 @@ class TestWebTablePage:
         result = page.DeleteUser()
         assert result == "No rows found", "Table is not empty"
 
+    def testValidationForFields(self, driver):
+        page = WebTablesPage(driver, "https://demoqa.com/webtables")
+        page.openUrl()
+        result = page.CheckValidationForFields()
+        assert True in result
+
 class TestClickPage:
 
     def testClicks(self, driver):
