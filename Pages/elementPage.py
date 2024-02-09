@@ -2,6 +2,7 @@ import base64
 import os
 import random
 import time
+from dataclasses import asdict
 from functools import wraps
 import requests
 from selenium.common import TimeoutException
@@ -10,7 +11,6 @@ from Locators.locatorForElementPage import Locators, LocatorsForWebTables, Locat
     LocatorsForDownload, LocatorsForDynamicProperties, LocatorsForRadioButtons, LocatorsForCheckBox
 from Pages.basePage import BasePage
 from generator.generator import generatedNames, generatedFile
-
 from selenium import webdriver
 
 
@@ -99,25 +99,21 @@ class WebTablesPage(BasePage):
 
     def AddNewUser(self):
         random = next(generatedNames())
-        firstName = random.firstName
-        lastName = random.lastName
-        email = random.email
-        age = random.age
-        salary = random.salary
-        department = random.department
         try:
             self.elementIsVisible(self.locators.add_tables).click()
         except:
             pass
-        valid_num = self.elementIsVisible(self.locators.department_input).get_attribute("maxlength")
-        self.elementIsVisible(self.locators.first_name_input).send_keys(firstName)
-        self.elementIsVisible(self.locators.last_name_input).send_keys(lastName)
-        self.elementIsVisible(self.locators.email_input).send_keys(email)
-        self.elementIsVisible(self.locators.age_input).send_keys(age)
-        self.elementIsVisible(self.locators.salary_input).send_keys(salary)
-        self.elementIsVisible(self.locators.department_input).send_keys(department[:int(valid_num)])
+        validAmountOfSymbls = self.elementIsVisible(self.locators.department_input).get_attribute("maxlength")
+        self.elementIsVisible(self.locators.first_name_input).send_keys(random.firstName)
+        self.elementIsVisible(self.locators.last_name_input).send_keys(random.lastName)
+        self.elementIsVisible(self.locators.email_input).send_keys(random.email)
+        self.elementIsVisible(self.locators.age_input).send_keys(str(random.age))
+        self.elementIsVisible(self.locators.salary_input).send_keys(str(random.salary))
+        self.elementIsVisible(self.locators.department_input).send_keys(random.department[:int(validAmountOfSymbls)])
         self.elementIsVisible(self.locators.submit_button).click()
-        return [firstName, lastName, str(age), email, str(salary), department]
+        return [random.firstName, random.lastName,
+                str(random.age), random.email,
+                str(random.salary), random.department[:int(validAmountOfSymbls)]]
 
 
     def CheckNumberOfUsersInTheTable(self):
@@ -205,7 +201,7 @@ class ButtonPage(BasePage):
 class LinkPage(BasePage):
     locators = LocatorsForLists()
 
-    def TestHomeLink(self):
+    def ReturnStatusCodeForHomeLink(self):
         homeLink = self.elementIsVisible(self.locators.home_link)
         link_href = homeLink.get_attribute('href')
         request = requests.get(link_href)
@@ -217,12 +213,9 @@ class LinkPage(BasePage):
         else:
             print(request.status_code)
 
-    def TestBrokenLink(self):
-        response = requests.get('https://demoqa.com/bad-request')
-        if response.status_code == 200:
-            self.elementIsVisible(self.locators.broken_link).click()
-        else:
-            return response.status_code
+    def ReturnStatusCodeFromLink(self, link):
+        response = requests.get(link)
+        return response.status_code
 
 class DownloadAndUploadPage(BasePage):
     locators = LocatorsForDownload()
@@ -280,10 +273,3 @@ class DynamicPropertiesPage(BasePage):
                 return True
 
         return False
-
-
-class qiwaPage(BasePage):
-    locators = Locators()
-
-    def LoginIntoAcc(self):
-        time.sleep(5)

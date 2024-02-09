@@ -63,7 +63,6 @@ class LocatorsForButtons:
 class LocatorsForLists:
 
     home_link = (By.CSS_SELECTOR, "a[id='simpleLink']")
-    broken_link = (By.CSS_SELECTOR, "a[id='bad-request']")
 
 class LocatorsForDownload:
 

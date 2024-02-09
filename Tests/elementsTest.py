@@ -3,7 +3,7 @@ import time
 
 from selenium.webdriver.common.by import By
 
-from Pages.elementPage import TextBoxPage, CheckBoxPage, qiwaPage, RadioButtonsPage, WebTablesPage, ButtonPage, LinkPage, \
+from Pages.elementPage import TextBoxPage, CheckBoxPage, RadioButtonsPage, WebTablesPage, ButtonPage, LinkPage, \
     DownloadAndUploadPage, DynamicPropertiesPage
 from conftest import driver
 
@@ -89,17 +89,38 @@ class TestClickPage:
 
 class TestLinkPage:
 
-    def testLink(self, driver):
+    def testHomeLink(self, driver):
         page = LinkPage(driver, "https://demoqa.com/links")
         page.openUrl()
-        href, url = page.TestHomeLink()
+        href, url = page.ReturnStatusCodeForHomeLink()
         assert href == url, "incorrect url"
 
-    def testBadRequestLink(self, driver):
+    def testLinkWithErrorCode(self, driver):
         page = LinkPage(driver, "https://demoqa.com/links")
         page.openUrl()
-        responseCode = page.TestBrokenLink()
-        assert responseCode == 400, "Response is not 400"
+        badRequestResponseCode = page.ReturnStatusCodeFromLink("https://demoqa.com/bad-request")
+        unauthorizedResponseCode = page.ReturnStatusCodeFromLink("https://demoqa.com/unauthorized")
+        forbiddenResponseCode = page.ReturnStatusCodeFromLink("https://demoqa.com/forbidden")
+        notFoundResponseCode = page.ReturnStatusCodeFromLink("https://demoqa.com/invalid-url")
+        assert badRequestResponseCode == 400, f"Response is {badRequestResponseCode} instead 400"
+        assert unauthorizedResponseCode == 401, f"Response {unauthorizedResponseCode} is instead 401"
+        assert forbiddenResponseCode == 403, f"Response is {forbiddenResponseCode} instead 403"
+        assert notFoundResponseCode == 404, f"Response is {notFoundResponseCode} instead 404"
+
+    def testLinkWithSuccesfulCode(self, driver):
+        page = LinkPage(driver, "https://demoqa.com/links")
+        page.openUrl()
+        createdResponseCode = page.ReturnStatusCodeFromLink("https://demoqa.com/created")
+        noContentResponseCode = page.ReturnStatusCodeFromLink("https://demoqa.com/no-content")
+        assert createdResponseCode == 201, f"Response is {createdResponseCode} instead 201"
+        assert noContentResponseCode == 204, f"Response is {noContentResponseCode} instead 204"
+
+    def testLinkWithRedirectionCode(self, driver):
+        page = LinkPage(driver, "https://demoqa.com/links")
+        page.openUrl()
+        movedResponseCode = page.ReturnStatusCodeFromLink("https://demoqa.com/moved")
+        assert movedResponseCode == 301, f"Response is {movedResponseCode} instead 301"
+
 
 class TestDownloadPage:
 
@@ -135,9 +156,5 @@ class TestDynamicPropertiesPage:
         result = page.checkAClickableButton()
         assert result is True, "Button is clickable before or after 5 sec"
 
-class TestQiwaLoggin:
-    def testQiwa(self, driver):
-        page = qiwaPage(driver, "https://Qiwa:zmkqikk7XEfZ6L8Oa%2FQ%3D@auth.qiwa.tech")
-        page.openUrl()
-        page.LoginIntoAcc()
+
 

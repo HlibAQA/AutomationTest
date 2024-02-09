@@ -1,12 +1,14 @@
 import random
 
+from Locators.locatorsForFormPage import LocatorsFormPage
 from data.data import Names
 from faker import Faker
 
 faker_en = Faker()
 Faker.seed()
+locators = LocatorsFormPage()
 
-def generatedNames():
+def generatedNames(maxNumber):
     yield Names(
         fullName=faker_en.name() + " " + faker_en.last_name(),
         firstName=faker_en.name(),
@@ -17,6 +19,7 @@ def generatedNames():
         email=faker_en.email(),
         currentAddress=faker_en.address(),
         permanentAddress=faker_en.address(),
+        mobileNumber=random.randint(10**(maxNumber-1), 10**maxNumber-1)
     )
 
 def generatedFile():

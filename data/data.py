@@ -12,3 +12,4 @@ class Names:
     email: str = None
     currentAddress: str = None
     permanentAddress: str = None
+    mobileNumber: int = None
