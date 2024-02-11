@@ -9,12 +9,19 @@ from conftest import driver
 
 
 class TestTextBoxPage:
-    def TestTextBox(self, driver):
+    def testTextBox(self, driver):
         page = TextBoxPage(driver, "https://demoqa.com/text-box")
         page.openUrl()
         inPutData = page.fillAllFields()
         outPutData = page.getResult()
         assert inPutData == outPutData, "The result is not matched with the data that user types"
+
+    def testTooltipForEmail(self, driver):
+        page = TextBoxPage(driver, "https://demoqa.com/text-box")
+        page.openUrl()
+        result = page.GetTooltipText()
+        print(result)
+        assert result == "Please include an '@' in the email address. '1' is missing an '@'.", "The text is different"
 
 class TestCheckBoxPage:
      def testCheckBox(self, driver):

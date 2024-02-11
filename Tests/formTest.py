@@ -9,6 +9,10 @@ class TestFormPage:
         page = FormPage(driver, "https://demoqa.com/automation-practice-form")
         page.openUrl()
         resultInput = page.AddNewUser()
-        time.sleep(1)
-        resultOutput = page.GetREsultFromFormPage()
+        resultOutput = page.GetResultFromFormPage()
         assert resultInput == resultOutput
+
+    def testValidationForFieldsFormPage(self, driver):
+        page = FormPage(driver, "https://demoqa.com/automation-practice-form")
+        page.openUrl()
+        print(page.CheckValidationForFields())

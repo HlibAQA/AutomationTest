@@ -37,6 +37,12 @@ class TextBoxPage(BasePage):
         permanent_address = self.elementIsPresented(self.locators.created_permanent_name).text.split(':')[1]
         return full_name, emails, current_adress, permanent_address
 
+    def GetTooltipText(self):
+        self.elementIsVisible(self.locators.email).send_keys("1")
+        self.elementIsVisible(self.locators.submit).click()
+        emailToolTipText = self.elementIsVisible(self.locators.email).get_attribute('validationMessage')
+        return emailToolTipText
+
     # def getOutput(self):
     #     for i in range(len(self.checkFields())):
     #         print(self.checkFields()[i])
@@ -92,7 +98,7 @@ class RadioButtonsPage(BasePage):
         # return self.elementIsVisible(choise[choosen]).text
 
     def GetRadioResult(self):
-        return self.elementIsVisible(self.locators.text_result).text
+        return self.elementIsVisible(self.locators.result_radio_button).text
 
 class WebTablesPage(BasePage):
     locators = LocatorsForWebTables()

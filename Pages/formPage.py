@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from Locators.locatorsForFormPage import LocatorsFormPage
 from Pages.basePage import BasePage
 from generator.generator import generatedNames, generatedFile
+from Pages.elementPage import WebTablesPage
 
 
 class FormPage(BasePage):
@@ -51,10 +52,18 @@ class FormPage(BasePage):
         return ([credential.fullName + " " + credential.lastName, credential.email, genderText, str(credential.mobileNumber), dateOfBirth[:2] + " " +
                  monthOfBirth.replace(" ", ","), subject, hobbiesText, fileName, str(credential.currentAddress).replace('\n', ' '), state + " " + city])
 
-    def GetREsultFromFormPage(self):
+    def GetResultFromFormPage(self):
             result = self.driver.find_elements(By.XPATH, "//div[@class='table-responsive']//td[2]")
             data = []
             for item in result:
-                self.scrollToElement(item)
                 data.append(item.text)
             return data
+
+    def CheckValidationForFields(self):
+        self.removeAdWithFooter()
+        self.elementIsVisible(self.locators.submit_button).click()
+        time.sleep(1)
+        firstNameIsValid = WebTablesPage.IsFieldValid(self, self.elementIsVisible(self.locators.first_name_input))
+        firstNameIsValid = WebTablesPage.IsFieldValid(self, self.elementIsVisible(self.locators.last_name_input))
+        firstNameIsValid = WebTablesPage.IsFieldValid(self, self.elementIsVisible(self.locators.mobile_number_input))
+        return firstNameIsValid

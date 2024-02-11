@@ -8,7 +8,7 @@ faker_en = Faker()
 Faker.seed()
 locators = LocatorsFormPage()
 
-def generatedNames(maxNumber):
+def generatedNames(maxNumber = 2):
     yield Names(
         fullName=faker_en.name() + " " + faker_en.last_name(),
         firstName=faker_en.name(),
