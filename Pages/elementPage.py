@@ -7,7 +7,7 @@ from functools import wraps
 import requests
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
-from Locators.locatorForElementPage import Locators, LocatorsForWebTables, LocatorsForButtons, LocatorsForLists, \
+from Locators.locatorElementPage import Locators, LocatorsForWebTables, LocatorsForButtons, LocatorsForLists, \
     LocatorsForDownload, LocatorsForDynamicProperties, LocatorsForRadioButtons, LocatorsForCheckBox
 from Pages.basePage import BasePage
 from generator.generator import generatedNames, generatedFile
@@ -173,21 +173,13 @@ class WebTablesPage(BasePage):
         self.elementIsVisible(self.locators.add_tables).click()
         self.elementIsVisible(self.locators.submit_button).click()
         time.sleep(1)
-        isFirstNameValid = self.IsFieldValid(self.elementIsVisible(self.locators.first_name_input))
-        isLastNameValid = self.IsFieldValid(self.elementIsVisible(self.locators.last_name_input))
-        isEmailValid = self.IsFieldValid(self.elementIsVisible(self.locators.email_input))
-        isAgeValid = self.IsFieldValid(self.elementIsVisible(self.locators.age_input))
-        isSalaryValid = self.IsFieldValid(self.elementIsVisible(self.locators.salary_input))
-        isDepartmentValid = self.IsFieldValid(self.elementIsVisible(self.locators.department_input))
+        isFirstNameValid = self.IsFieldValidated(self.elementIsVisible(self.locators.first_name_input))
+        isLastNameValid = self.IsFieldValidated(self.elementIsVisible(self.locators.last_name_input))
+        isEmailValid = self.IsFieldValidated(self.elementIsVisible(self.locators.email_input))
+        isAgeValid = self.IsFieldValidated(self.elementIsVisible(self.locators.age_input))
+        isSalaryValid = self.IsFieldValidated(self.elementIsVisible(self.locators.salary_input))
+        isDepartmentValid = self.IsFieldValidated(self.elementIsVisible(self.locators.department_input))
         return [isFirstNameValid, isLastNameValid, isEmailValid, isAgeValid, isSalaryValid, isDepartmentValid]
-
-    def IsFieldValid(self, locartor):
-        fieldColor = locartor.value_of_css_property("border-color")
-        #rgb(220, 53, 69) is correct color
-        if str(fieldColor) == "rgb(220, 53, 69)":
-            return True
-        else:
-            return False
 
 class ButtonPage(BasePage):
     locators = LocatorsForButtons()

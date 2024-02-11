@@ -15,4 +15,5 @@ class TestFormPage:
     def testValidationForFieldsFormPage(self, driver):
         page = FormPage(driver, "https://demoqa.com/automation-practice-form")
         page.openUrl()
-        print(page.CheckValidationForFields())
+        result = page.CheckValidationForFields()
+        assert True in result

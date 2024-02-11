@@ -1,6 +1,6 @@
 import random
 
-from Locators.locatorsForFormPage import LocatorsFormPage
+from Locators.locatorsFormPage import LocatorsFormPage
 from data.data import Names
 from faker import Faker
 

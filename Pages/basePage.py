@@ -45,3 +45,24 @@ class BasePage:
     def removeAdWithFooter(self):
         self.driver.execute_script("document.getElementById('fixedban').remove();")
         self.driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
+
+    def IsFieldValidated(self, locator):
+        fieldColor = locator.value_of_css_property("border-color")
+        #rgb(220, 53, 69) is correct color
+        if str(fieldColor) == "rgb(220, 53, 69)":
+            return True
+        else:
+            return False
+
+    def IsRadioButtonValidated(self, locator):
+        radioButtonColor = locator.value_of_css_property("color")
+        # rgb(220, 53, 69) is correct color
+        if str(radioButtonColor) == "rgba(220, 53, 69, 1)":
+            return True
+        else:
+            return False
+
+    def ReturnUrlForNewWindowTab(self, locator):
+        locator.click()
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        return self.driver.current_url

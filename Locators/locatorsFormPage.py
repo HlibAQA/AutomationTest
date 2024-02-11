@@ -2,7 +2,7 @@ import random
 
 from selenium.webdriver.common.by import By
 
-from Locators.locatorForElementPage import LocatorsForWebTables
+from Locators.locatorElementPage import LocatorsForWebTables
 
 
 class LocatorsFormPage:

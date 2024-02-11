@@ -5,7 +5,7 @@ import time
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
-from Locators.locatorsForFormPage import LocatorsFormPage
+from Locators.locatorsFormPage import LocatorsFormPage
 from Pages.basePage import BasePage
 from generator.generator import generatedNames, generatedFile
 from Pages.elementPage import WebTablesPage
@@ -63,7 +63,8 @@ class FormPage(BasePage):
         self.removeAdWithFooter()
         self.elementIsVisible(self.locators.submit_button).click()
         time.sleep(1)
-        firstNameIsValid = WebTablesPage.IsFieldValid(self, self.elementIsVisible(self.locators.first_name_input))
-        firstNameIsValid = WebTablesPage.IsFieldValid(self, self.elementIsVisible(self.locators.last_name_input))
-        firstNameIsValid = WebTablesPage.IsFieldValid(self, self.elementIsVisible(self.locators.mobile_number_input))
-        return firstNameIsValid
+        firstNameIsValid = self.IsFieldValidated(self.elementIsVisible(self.locators.first_name_input))
+        secondNameIsValid = self.IsFieldValidated(self.elementIsVisible(self.locators.last_name_input))
+        mobileNumberIsValid = self.IsFieldValidated(self.elementIsVisible(self.locators.mobile_number_input))
+        genderButtonIsValid = self.IsRadioButtonValidated(self.elementIsVisible(self.locators.gender_radio_button))
+        return firstNameIsValid, secondNameIsValid, mobileNumberIsValid, genderButtonIsValid
