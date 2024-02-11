@@ -10,8 +10,8 @@ class LocatorsFormPage:
     first_name_input = LocatorsForWebTables.first_name_input
     last_name_input = LocatorsForWebTables.last_name_input
     email_input = LocatorsForWebTables.email_input
-    gender_radio_button = (By.CSS_SELECTOR, f"input[id=='gender-radio-{random.randint(1, 3)}']")
-    hobbies_radio_button = (By.CSS_SELECTOR, f"input[id=='hobbies-checkbox-{random.randint(1,3)}']")
+    gender_radio_button = (By.CSS_SELECTOR, f"label[for='gender-radio-{random.randint(1, 3)}']")
+    hobbies_radio_button = (By.CSS_SELECTOR, f"label[for='hobbies-checkbox-{random.randint(1,3)}']")
     mobile_number_input = (By.CSS_SELECTOR, "input[id='userNumber']")
     subjects_input = (By.CSS_SELECTOR, "input[id='subjectsInput']")
     upload_picture_button = (By.CSS_SELECTOR, "input[id='uploadPicture']")
@@ -26,3 +26,4 @@ class LocatorsFormPage:
         "Haryana": ["Karnal", "Panipat"],
         "Rajasthan": ["Jaipur", "Jaiselmer"]
     }
+    date_of_birth = (By.CSS_SELECTOR, "input[id='dateOfBirthInput']")
