@@ -43,9 +43,6 @@ class TextBoxPage(BasePage):
         emailToolTipText = self.elementIsVisible(self.locators.email).get_attribute('validationMessage')
         return emailToolTipText
 
-    # def getOutput(self):
-    #     for i in range(len(self.checkFields())):
-    #         print(self.checkFields()[i])
 
 class CheckBoxPage(BasePage):
     locators = LocatorsForCheckBox()
