@@ -66,3 +66,11 @@ class BasePage:
         locator.click()
         self.driver.switch_to.window(self.driver.window_handles[1])
         return self.driver.current_url
+
+    def GetFrameTextAndSize(self, locator, locatorText):
+        frame = self.elementIsPresented(locator)
+        width = frame.get_attribute('width')
+        height = frame.get_attribute('height')
+        self.driver.switch_to.frame(frame)
+        text = self.elementIsPresented(locatorText).text
+        return [text, width, height]

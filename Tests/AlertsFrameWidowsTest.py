@@ -1,7 +1,7 @@
 import random
 import time
 
-from Pages.AlertsFrameWindowsPage import BrowserWindow, AlertWindow
+from Pages.AlertsFrameWindowsPage import BrowserWindow, AlertWindow, Frames
 from conftest import driver
 from generator.generator import generatedNames
 
@@ -47,3 +47,17 @@ class TestAlerts:
         text = next(generatedNames())
         result = page.GetTextFromPromptAlert(text.fullName)
         assert result == f"You entered {text.fullName}", "Name is not matched with result"
+
+class TestFrames:
+
+    def testFirstFrame(self, driver):
+        page = Frames(driver, "https://demoqa.com/frames")
+        page.openUrl()
+        result = page.ReturnFirstFrameTextAndSize()
+        assert result == ['This is a sample page', '500px', '350px']
+
+    def testSecondFrame(self, driver):
+        page = Frames(driver, "https://demoqa.com/frames")
+        page.openUrl()
+        result = page.ReturnSecondFrameTextAndSize()
+        assert result == ['This is a sample page', '100px', '100px']

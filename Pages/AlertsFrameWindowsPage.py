@@ -1,6 +1,6 @@
 import time
 
-from Locators.locatorsAlertsFrameWindowsPage import LocatorsBrowserWindow, LocatorsAlert
+from Locators.locatorsAlertsFrameWindowsPage import LocatorsBrowserWindow, LocatorsAlert, LocatorsFrames
 from Pages.basePage import BasePage
 from selenium import webdriver
 
@@ -40,3 +40,13 @@ class AlertWindow(BasePage):
         alert.send_keys(text)
         alert.accept()
         return self.elementIsPresented(self.locators.prompt_text).text
+
+class Frames(BasePage):
+
+    locators = LocatorsFrames()
+
+    def ReturnFirstFrameTextAndSize(self):
+        return self.GetFrameTextAndSize(self.locators.first_frame, self.locators.frame_text)
+
+    def ReturnSecondFrameTextAndSize(self):
+        return self.GetFrameTextAndSize(self.locators.second_frame, self.locators.frame_text)
