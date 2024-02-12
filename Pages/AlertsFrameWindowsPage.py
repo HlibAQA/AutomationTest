@@ -1,6 +1,7 @@
 import time
 
-from Locators.locatorsAlertsFrameWindowsPage import LocatorsBrowserWindow, LocatorsAlert, LocatorsFrames
+from Locators.locatorsAlertsFrameWindowsPage import LocatorsBrowserWindow, LocatorsAlert, LocatorsFrames, \
+    LocatorsNestedFrames, LocatorsModalDialog
 from Pages.basePage import BasePage
 from selenium import webdriver
 
@@ -50,3 +51,23 @@ class Frames(BasePage):
 
     def ReturnSecondFrameTextAndSize(self):
         return self.GetFrameTextAndSize(self.locators.second_frame, self.locators.frame_text)
+
+class NestedFrames(BasePage):
+
+    locators = LocatorsNestedFrames()
+
+    def GetTextFromNestedFrames(self):
+        parentFrame = self.elementIsPresented(self.locators.parent_frame)
+        self.driver.switch_to.frame(parentFrame)
+        parentText = self.elementIsPresented(self.locators.parent_text).text
+
+        childFrame = self.elementIsPresented(self.locators.child_frame)
+        self.driver.switch_to.frame(childFrame)
+        childText = self.elementIsPresented(self.locators.child_text).text
+
+        self.driver.switch_to.default_content()
+        return parentText, childText
+
+class ModalDialogs(BasePage):
+
+    locators = LocatorsModalDialog()

@@ -19,3 +19,14 @@ class LocatorsFrames:
     first_frame = (By.CSS_SELECTOR, "iframe[id='frame1']")
     second_frame = (By.CSS_SELECTOR, "iframe[id='frame2']")
     frame_text = (By.CSS_SELECTOR, "h1[id='sampleHeading']")
+
+class LocatorsNestedFrames:
+
+    parent_frame = (By.CSS_SELECTOR, "iframe[id='frame1']")
+    parent_text = (By.CSS_SELECTOR, "body")
+    child_frame = (By.CSS_SELECTOR, "iframe[srcdoc='<p>Child Iframe</p>']")
+    child_text = (By.CSS_SELECTOR, "p")
+
+class LocatorsModalDialog:
+
+    pass

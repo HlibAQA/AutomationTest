@@ -1,7 +1,7 @@
 import random
 import time
 
-from Pages.AlertsFrameWindowsPage import BrowserWindow, AlertWindow, Frames
+from Pages.AlertsFrameWindowsPage import BrowserWindow, AlertWindow, Frames, NestedFrames, ModalDialogs
 from conftest import driver
 from generator.generator import generatedNames
 
@@ -61,3 +61,17 @@ class TestFrames:
         page.openUrl()
         result = page.ReturnSecondFrameTextAndSize()
         assert result == ['This is a sample page', '100px', '100px']
+
+class TestNestedFrame:
+
+    def testNestedFrame(self, driver):
+        page = NestedFrames(driver, "https://demoqa.com/nestedframes")
+        page.openUrl()
+        parentText, childText = page.GetTextFromNestedFrames()
+        assert parentText == "Parent frame" and childText == "Child Iframe", "Text in frame is different"
+
+class TestModalDialogs:
+
+    def testFirstFrame(self, driver):
+        page = ModalDialogs(driver, "https://demoqa.com/modal-dialogs")
+        page.openUrl()
