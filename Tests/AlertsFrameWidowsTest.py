@@ -72,6 +72,26 @@ class TestNestedFrame:
 
 class TestModalDialogs:
 
-    def testFirstFrame(self, driver):
+    def testSmallModalDialog(self, driver):
         page = ModalDialogs(driver, "https://demoqa.com/modal-dialogs")
         page.openUrl()
+        title, content = page.GetTextFromSmallModal()
+        assert title == "Small Modal" and content == "This is a small modal. It has very less content"
+
+    def testLargeModalDialog(self, driver):
+        page = ModalDialogs(driver, "https://demoqa.com/modal-dialogs")
+        page.openUrl()
+        title, contentLength = page.GetTextFromLargeModal()
+        assert title == "Large Modal" and contentLength == 574, "Title or length is not matched with expected result"
+
+    def testClosingButtonForModalDialog(self, driver):
+        page = ModalDialogs(driver, "https://demoqa.com/modal-dialogs")
+        page.openUrl()
+        result = page.CloseTheModalDialogUsingButton()
+        assert result is True, "Button can't close the nodal"
+
+    def testClosingIconForModalDialog(self, driver):
+        page = ModalDialogs(driver, "https://demoqa.com/modal-dialogs")
+        page.openUrl()
+        result = page.CloseTheModalDialogUsingIcon()
+        assert result is True, "Icon can't close the modal"

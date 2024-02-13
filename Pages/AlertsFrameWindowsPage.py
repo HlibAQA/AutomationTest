@@ -71,3 +71,31 @@ class NestedFrames(BasePage):
 class ModalDialogs(BasePage):
 
     locators = LocatorsModalDialog()
+
+    def GetTextFromSmallModal(self):
+        self.elementIsVisible(self.locators.small_modal_button).click()
+        smallModalContentText = self.elementIsPresented(self.locators.small_modal_content_text).text
+        smallModalHeaderText = self.elementIsPresented(self.locators.modal_title_text).text
+        return smallModalHeaderText, smallModalContentText
+
+    def GetTextFromLargeModal(self):
+        self.elementIsVisible(self.locators.large_modal_button).click()
+        largeModalContentText = self.elementIsPresented(self.locators.large_modal_content_text).text
+        largeModalHeaderText = self.elementIsPresented(self.locators.modal_title_text).text
+        return largeModalHeaderText, len(largeModalContentText)
+
+    def CloseTheModalDialogUsingButton(self):
+        self.elementIsVisible(self.locators.large_modal_button).click()
+        try:
+            self.elementIsVisible(self.locators.large_modal_close_button).click()
+            return True
+        except:
+            return False
+
+    def CloseTheModalDialogUsingIcon(self):
+        self.elementIsVisible(self.locators.large_modal_button).click()
+        try:
+            self.elementIsVisible(self.locators.close_icon_button_for_modal).click()
+            return True
+        except:
+            return False

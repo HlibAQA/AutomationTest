@@ -29,4 +29,14 @@ class LocatorsNestedFrames:
 
 class LocatorsModalDialog:
 
-    pass
+    small_modal_button = (By.CSS_SELECTOR, "button[id='showSmallModal']")
+    small_modal_content_text = (By.CSS_SELECTOR, "div[class='modal-body']")
+    small_modal_close_button = (By.CSS_SELECTOR, "button[id='closeSmallModal']")
+
+    modal_title_text = (By.CSS_SELECTOR, "div[class='modal-title h4']")
+
+    large_modal_button = (By.CSS_SELECTOR, "button[id='showLargeModal']")
+    large_modal_content_text = (By.CSS_SELECTOR, "div[class='modal-body'] p")
+    large_modal_close_button = (By.CSS_SELECTOR, "button[id='closeLargeModal']")
+
+    close_icon_button_for_modal = (By.CSS_SELECTOR, "button[class='close']")
