@@ -20,7 +20,7 @@ class BasePage:
     def elementIsPresented(self, locator, timeout=5):
         return wait(self.driver, timeout).until(excon.presence_of_element_located(locator))
 
-    def elementsAreAllNotVisible(self, locator, timeout=5):
+    def elementsArePresented(self, locator, timeout=5):
         return wait(self.driver, timeout).until(excon.presence_of_all_elements_located(locator))
 
     def elementIsInvisible(self, locator, timeout=5):

@@ -27,11 +27,10 @@ class TestCheckBoxPage:
      def testCheckBox(self, driver):
          page = CheckBoxPage(driver, "https://demoqa.com/checkbox")
          page.openUrl()
-         page.CheckAllThings()
-         page.CheckList()
-         checkBoxResult = page.CheckCheckedCheckbox()
-         textResult = page.GetOutOutResult()
-         assert checkBoxResult == textResult, "Checkboxes result is not matched"
+         page.ClickOnRandomBoxes()
+         checkBoxTextResult = page.GetTextFromCheckedBoxes()
+         textResult = page.GetResultText()
+         assert checkBoxTextResult == textResult, "Checkboxes result is not matched"
 
 class TestRadioButtonPage:
     def testRadioButtons(self, driver):
@@ -43,8 +42,9 @@ class TestRadioButtonPage:
         inputImpressive = page.GetRadioResult()
         page.ClickRadioButton('no')
         inputNo = page.GetRadioResult()
-        assert inputYes == 'Yes', "Incorrect radio button"
-        assert inputImpressive == 'Impressive'
+        assert inputYes == 'Yes', "Yes button is disabled"
+        assert inputImpressive == 'Impressive', "Impressive button is disabled"
+        assert inputNo == 'No', "No button is disabled"
 
 class TestWebTablePage:
     def testNewUserWebPage(self, driver):
@@ -134,13 +134,13 @@ class TestDownloadPage:
     def testUploadFile(self, driver):
         page = DownloadAndUploadPage(driver, "https://demoqa.com/upload-download")
         page.openUrl()
-        fileName, result = page.uploadFile()
+        fileName, result = page.UploadFile()
         assert fileName == result, "File names is not matched"
 
     def testDownloadFile(self, driver):
         page = DownloadAndUploadPage(driver, "https://demoqa.com/upload-download")
         page.openUrl()
-        result = page.downloadFile()
+        result = page.DownloadFile()
         assert result is True, "File isn't downloaded"
 
 class TestDynamicPropertiesPage:
@@ -148,19 +148,19 @@ class TestDynamicPropertiesPage:
     def testColorButton(self, driver):
         page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
         page.openUrl()
-        colorBefore, colorAfter = page.checkChangeColoButton()
+        colorBefore, colorAfter = page.GetColorBtnBeforeAndAfterChange()
         assert colorAfter != colorBefore, "Color is not changed"
 
-    def testNotAppearButton(self, driver):
+    def testAppearButton(self, driver):
         page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
         page.openUrl()
-        result = page.checkAppearButton()
+        result = page.CheckAppearButton()
         assert result is True, "Button is appear before or after 5 sec"
 
-    def testNotClickableButton(self, driver):
+    def testEnableButton(self, driver):
         page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
         page.openUrl()
-        result = page.checkAClickableButton()
+        result = page.ChecEnableButton()
         assert result is True, "Button is clickable before or after 5 sec"
 
 

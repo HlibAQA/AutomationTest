@@ -47,10 +47,8 @@ class TextBoxPage(BasePage):
 class CheckBoxPage(BasePage):
     locators = LocatorsForCheckBox()
 
-    def CheckAllThings(self):
+    def ClickOnRandomBoxes(self):
         self.elementIsVisible(self.locators.show_all_checkboxes).click()
-
-    def CheckList(self):
         lists = self.elementsAreAllVisible(self.locators.list_with_all_check_boxes_text)
         count = 10
         while count != 0:
@@ -62,16 +60,16 @@ class CheckBoxPage(BasePage):
             else:
                 break
 
-    def CheckCheckedCheckbox(self):
-        checkBox = self.elementsAreAllNotVisible(self.locators.checked_checkbox)
+    def GetTextFromCheckedBoxes(self):
+        checkBox = self.elementsArePresented(self.locators.checked_checkbox)
         data = []
         for box in checkBox:
             item = box.find_element(By.XPATH, ".//ancestor::span[@class='rct-text']")
             data.append(item.text)
         return data
 
-    def GetOutOutResult(self):
-        texter = self.elementsAreAllNotVisible(self.locators.text_result)
+    def GetResultText(self):
+        texter = self.elementsArePresented(self.locators.text_result)
         data = []
         for i in texter:
             if i.text == "wordFile":
@@ -215,14 +213,14 @@ class LinkPage(BasePage):
 class DownloadAndUploadPage(BasePage):
     locators = LocatorsForDownload()
 
-    def uploadFile(self):
+    def UploadFile(self):
         fileName, path = generatedFile()
         self.elementIsPresented(self.locators.upload_file_button).send_keys(path)
         os.remove(path)
         uploadResult = self.elementIsPresented(self.locators.upload_file_result).text
         return fileName, uploadResult.split('\\')[-1]
 
-    def downloadFile(self):
+    def DownloadFile(self):
         link = self.elementIsPresented(self.locators.download_file_button).get_attribute('href')
         link_b = base64.b64decode(link)
         pathName = '/Users/hlibssoev/PycharmProjects/firstTestPythonProject/fileName.jpg'
@@ -236,32 +234,27 @@ class DownloadAndUploadPage(BasePage):
 class DynamicPropertiesPage(BasePage):
     locators = LocatorsForDynamicProperties()
 
-    def checkChangeColoButton(self):
+    def GetColorBtnBeforeAndAfterChange(self):
         colorButton = self.elementIsPresented(self.locators.color_change_button)
         theColorBefore = colorButton.value_of_css_property('color')
         time.sleep(5)
         theColorAfter = colorButton.value_of_css_property('color')
         return theColorBefore, theColorAfter
 
-    def checkAppearButton(self):
+    def CheckAppearButton(self):
+        result = self.CheckFiveSecondValidation(self.locators.visible_after_five_sec_btn)
+        return result
+
+    def ChecEnableButton(self):
+        result = self.CheckFiveSecondValidation(self.locators.enable_after_five_sec_btn)
+        return result
+
+    def CheckFiveSecondValidation(self, locator):
         try:
-            self.elementIsVisible(self.locators.visible_after_five_sec_btn, 4.5).click()
+            self.elementIsClicable(locator, 4).click()
         except TimeoutException:
             try:
-                self.elementIsVisible(self.locators.visible_after_five_sec_btn, 5.1).click()
-            except TimeoutException:
-                return False
-            else:
-                return True
-
-        return False
-
-    def checkAClickableButton(self):
-        try:
-            self.elementIsClicable(self.locators.enable_after_five_sec_btn, 4.5).click()
-        except TimeoutException:
-            try:
-                self.elementIsVisible(self.locators.enable_after_five_sec_btn, 5.1).click()
+                self.elementIsVisible(locator, 5).click()
             except TimeoutException:
                 return False
             else:
